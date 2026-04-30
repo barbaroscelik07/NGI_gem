@@ -1,0 +1,25 @@
+name: EXE_Olustur
+
+on:
+  workflow_dispatch: # Bu satır sayesinde "Run workflow" butonu çıkar
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Python Kur
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    - name: Kutupanaleri Yukle
+      run: |
+        pip install customtkinter numpy scipy matplotlib reportlab pyinstaller
+    - name: EXE Yap
+      run: |
+        pyinstaller --noconsole --onefile --name "NGI_Analiz_v6.5" ngi_citdas.py
+    - name: Indirme Linki Hazirla
+      uses: actions/upload-artifact@v4
+      with:
+        name: NGI_Programi
+        path: dist/NGI_Analiz_v6.5.exe
